@@ -29,15 +29,15 @@ def load_patent_data(dir_path):
             with open(file_path, "r") as f:
                 data = json.load(f)
 
-            title = data.get("title")
-            pdf = data.get("pdf")
-            publication_date = data.get("publication_date")
-            patent_id = data.get("search_parameters", {}).get("patent_id", None)
-            abstract = data.get("abstract", "")
+            title = data.get("title") # Extract title from the data
+            pdf = data.get("pdf") # Extract PDF link from the data
+            publication_date = data.get("publication_date") # Extract publication date from the data
+            patent_id = data.get("search_parameters", {}).get("patent_id", None) # Extract patent ID from the search parameters
+            abstract = data.get("abstract", "") # Extract abstract from the data
             token_count = len(
-                tiktoken.encoding_for_model("gpt-3.5-turbo").encode(abstract)
+                tiktoken.encoding_for_model("gpt-3.5-turbo").encode(abstract) # Count tokens in the abstract
             )
-            embedding = get_embedding(abstract)
+            embedding = get_embedding(abstract) # Get embedding for the abstract
 
             chunks.append(
                 {
@@ -70,7 +70,7 @@ def index_patent_data(client, index_name, patent_data):
 
 
 if __name__ == "__main__":
-    dir_path = "results"
+    dir_path = "Results_lithium_Ion"  # Directory containing patent data JSON files
 
     host = "localhost"
     port = 9200
